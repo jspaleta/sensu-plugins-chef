@@ -15,11 +15,12 @@ notifications:
     on_success: change
     on_failure: always
 script:
+- bash -c "echo Checking Docker Login: $(docker info |grep Username)"
 - bundle exec rake default
 - gem build sensu-plugins-chef.gemspec
 - gem install sensu-plugins-chef-*.gem
 before_deploy:
-- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'"
+-- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'"
 deploy:
 - provider: script
   script: bonsai/ruby26-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-chef
@@ -37,4 +38,8 @@ deploy:
     all_branches: true
     rvm: 2.6
     repo: sensu-plugins/sensu-plugins-chef
-    
+
+env:
+  global:
+  - secure: LTNTxi9v9+1E5W5QwxipSH/kx3Az/0Nlh8hlH0qTkqVv5tEXQag2l9Ygm4KgRHjGMB4ycrv4zPSwHuI4Baq7kJO509qMgkjLJtRytpWu+VUOXhKB2TebvG2XWCZiSDxpW0doKfxeghWL0A2aUil8OXmMmvfMpdOSGeT9GBRSwc7jcCtgTlqYujXGpJhPOwZFROdPghveUSDc3IOjoM+v+MKL67U5/EwKNJb72iyYBP2o4I5x2HlWoj24I4pneUH1jIqpnNh0UPq62LLoaWRY/Qb6u0IukB5aGcTZqcAF1Ic6KHgMU+ZSGrRl2C5dTGz/Wqgv/WRhl+TfnP3IsgiFYg3//dL/Kq3qotpfyB5FLF9mk/aGNb16UOzgjnhyJ33Kpl8wga8h2+AyCRXTY87UDExXepIsiyrFcCnPZuvMVJ+l93DeIks9N1R26eaAJ4+NV4Poqaeabc+iD4kHht6HlJqH/M526UTBznr0SBtut+PKVlhlso9rWRe/j9JfK+Uzem8h3loU5DU+CORp+wSFzfpI93/JxlnQ00znmCJk67bLrp50+sY6aM9PDfQUiAEG2GfSnVKT4GHwMg/Halotc709SqoNxcT86z11v23+XeOF22ijegC8GublOVQS7dPY7gXjxr+/RTX3pRgpOFxxYkyOLb9GVSYOqNN4ZfU3rMA=
+  - secure: ZUl8b+GA9Cm7GjcRYtUThjE7AdZpzogxMBGUxL77oCZ8vh/ngAfkzboPnnNX+VR+6/q6378WzZS0lGlr3BYBLJIrSeQRmfx0ceCh5SD2QaJVXueNRDSiXpYJn4FCXXB8hhaqclWVT8iEqycgP8pspjEND9FMwtuwIIdQPr9Ev+3EjtfAP58ip2nKwBHv0NQTmeI+9qASRHo1wPWztvI4Q3vqyJby7uCf+gswKjTRbOuIqMjmKdjxGdFiokxRbIBLc3H5iZw+6ZioTSAMAmxGmcLem0lpdmjVqYpyOXa5QcQ8B2SUUqAgt1SxPmkp1/kJ+wyUaSkqmuyl9JtmDZKb+ENIH+1MjpA6aH534PZilNHy7ahWTINHZb42ZCtvHG3SbYu+jgso1fhnBtd5M4mUty53bnsh+PxfWzX/OKMDB5OH92BDsKeZDcqKFBfCwRhKrTfA8qjGoed4KXaJIfeEfxHrAx+Exvo0+yeCNvt4wHepZvE33JXOC3gYMByudPEnxIzCQAf9uY+wrUi4vzlJFMUVb5NwWhpflj74Oq8G73/lmtm/BRZXk3AQCORqkPuievBReRVc3b/cWEAM9waJ+YZBO15HT9aLruvAimZ3uvETgjxvmdpXqYQ5EFijvWujeQP0qiupmA5WgnWLo0Vb2odJUUILegc6AG2Fm4lS9HA=
