@@ -15,7 +15,7 @@ notifications:
     on_success: change
     on_failure: always
 script:
-- 'bash -c "echo Checking Docker Login: $(docker info |grep Username)"'
+- echo "Checking Docker Login-> $(docker info |grep Username)"
 - bundle exec rake default
 - gem build sensu-plugins-chef.gemspec
 - gem install sensu-plugins-chef-*.gem
